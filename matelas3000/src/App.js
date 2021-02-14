@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import { styleReset, List, ListItem, Divider } from 'react95';
@@ -7,6 +7,10 @@ import original from "react95/dist/themes/original";
 // original Windows95 font (optionally)
 import ms_sans_serif from "react95/dist/fonts/ms_sans_serif.woff2";
 import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
+
+import AppBar from './AppBar';
+import UserWindow from './UserWindow';
+import PostProcessWindow from './PostProcessWindow';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -23,22 +27,23 @@ const GlobalStyles = createGlobalStyle`
   }
   body {
     font-family: 'ms_sans_serif';
+    background-color: teal;
   }
   ${styleReset}
 `;
 
-const App = () => (
+const App = () => {
+  const [UserWindowOpen, setUserWindowOpen] = useState(false);
+  const [PostProcessWindowOpen, setPostProcessWindowOpen] = useState(false);
+  return (
   <div>
     <GlobalStyles />
     <ThemeProvider theme={original}>
-      <List>
-        <ListItem>🎤 Sing</ListItem>
-        <ListItem>💃🏻 Dance</ListItem>
-        <Divider />
-        <ListItem disabled>😴 Sleep</ListItem>
-      </List>
-    </ThemeProvider>
+    <AppBar openUserWindow={() => setUserWindowOpen(true)} openPostProcessWindow={() => setPostProcessWindowOpen(true)}/>
+    {UserWindowOpen && <UserWindow closeWindow={() => setUserWindowOpen(false)} />}
+    {PostProcessWindowOpen && <PostProcessWindow closeWindow={() => setPostProcessWindowOpen(false)} />}
+  </ThemeProvider>
   </div>
-);
+)};
 
 export default App;
