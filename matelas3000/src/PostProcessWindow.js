@@ -45,6 +45,7 @@ align-items: center;.window-header {
 .window {
   width: 400px;
   min-height: 200px;
+  min-width: 50%
 }
 .window:nth-child(2) {
   margin: 2rem;
@@ -63,8 +64,64 @@ align-items: center;.window-header {
 `;
 
 export default ({closeWindow}) => {
-  const loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sollicitudin, ante vel porttitor posuere, tellus nisi interdum ipsum, non bibendum ante risus ut purus. Curabitur vel posuere odio. Vivamus rutrum, nunc et ullamcorper sagittis, tellus ligula maximus quam, id dapibus sapien metus lobortis diam. Proin luctus, dolor in finibus feugiat, lacus enim gravida sem, quis aliquet tellus leo nec enim. Morbi varius bibendum augue quis venenatis. Curabitur ut elit augue. Pellentesque posuere enim a mattis interdum. Donec sodales convallis turpis, a vulputate elit. Suspendisse potenti.`;
-    return (
+  const code1 = `void readLargerTextFile(String aFileName) throws IOException {
+    Path path = Paths.get(aFileName);
+    try (Scanner scanner =  new Scanner(path, ENCODING.name())){
+        while (scanner.hasNextLine()){
+            //process each line in some way
+            log(scanner.nextLine());
+        }
+    }
+}
+
+private static void log(Object aMsg){
+    System.out.println(String.valueOf(aMsg));
+}`;
+  const code2 = `	public static void main(String [] args) throws IOException
+	{
+		modeleInit = FileReader.readLargerTextFile("input.in");
+		//TODO
+		int i=0;
+		Modele modeleBoucle = (Modele) modeleInit.clone();
+		do {
+			modeleBoucle = Algo1.algoModele(modeleBoucle);
+			
+			Resultat newResultat = Algo1.algoResultat(modeleBoucle);
+			int newScore = CalculScore.score(newResultat);
+			ShowResult.print(newResultat);
+			if (newScore>scoreMax){
+				modeleMax = modeleBoucle;
+				resultatMax = newResultat;
+			}
+			i++;
+		} while (false);
+		
+		FileWriter.writeLargerTextFile("out.txt", resultatMax);
+	}
+`;
+  const code3 = `	public static List<Resultat> selection(List<Resultat> populationInitiale) {
+		List<Resultat> nouvelleGeneration = new ArrayList<Resultat>();
+		Map<Resultat,Integer> scores = new HashMap<Resultat,Integer>();
+		Map<Resultat,Integer> bestScores = new HashMap<Resultat,Integer>();
+		
+		int actualMinScore = Integer.MAX_VALUE;
+		Resultat actualMinResultat = null;
+		
+		for (Resultat resultat : populationInitiale) {
+			int score = CalculScore.score(resultat);
+			scores.put(resultat, score);
+		}
+		
+		for (Entry<Resultat,Integer> entry : scores.entrySet()) {
+			if(bestScores.size()<(populationInitiale.size()/2)) {
+				bestScores.put(entry.getKey(),entry.getValue());
+				if(actualMinScore>entry.getValue()){
+					actualMinScore = entry.getValue();
+					actualMinResultat = entry.getKey();
+				}
+`;
+
+  return (
         <Wrapper>
         <Window className='window'>
         <WindowHeader className='window-header'>
@@ -74,7 +131,42 @@ export default ({closeWindow}) => {
           </Button>
         </WindowHeader>
       <WindowContent>
-      <TextField multiline rows={10} defaultValue={loremIpsum} fullWidth />
+      <p>Décodage du rêve</p>
+          <div style={{ display: 'flex' }}>
+            <TextField
+              multiline
+              rows={4}
+              defaultValue={code1}
+              fullWidth
+            />
+            <Button onClick={() => {}} style={{ marginLeft: 4 }}>
+              Lancer
+            </Button>
+          </div>
+          <p>Calculer l'effet sur le rêveur</p>
+          <div style={{ display: 'flex' }}>
+            <TextField
+              multiline
+              rows={4}
+              defaultValue={code2}
+              fullWidth
+            />
+            <Button onClick={() => {}} style={{ marginLeft: 4 }}>
+              Lancer
+            </Button>
+          </div>
+          <p>Archivage du rêve</p>
+          <div style={{ display: 'flex' }}>
+            <TextField
+              multiline
+              rows={4}
+              defaultValue={code3}
+              fullWidth
+            />
+            <Button onClick={() => {}} style={{ marginLeft: 4 }}>
+              Lancer
+            </Button>
+          </div>
       </WindowContent>
       <div className='footer'>
       <Button onClick={() => {
