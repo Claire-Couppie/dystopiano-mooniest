@@ -10,6 +10,7 @@ import ms_sans_serif_bold from "react95/dist/fonts/ms_sans_serif_bold.woff2";
 
 import AppBar from './AppBar';
 import UserWindow from './UserWindow';
+import DreamWindow from './DreamWindow';
 import PostProcessWindow from './PostProcessWindow';
 
 const GlobalStyles = createGlobalStyle`
@@ -33,15 +34,30 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const App = () => {
-  const [UserWindowOpen, setUserWindowOpen] = useState(false);
-  const [PostProcessWindowOpen, setPostProcessWindowOpen] = useState(false);
+  const [userWindowOpen, setUserWindowOpen] = useState(false);
+  const [postProcessWindowOpen, setPostProcessWindowOpen] = useState(false);
+  const [dreamWindowOpen, setDreamWindowOpen] = useState(-1);
   return (
   <div>
     <GlobalStyles />
     <ThemeProvider theme={original}>
     <AppBar openUserWindow={() => setUserWindowOpen(true)} openPostProcessWindow={() => setPostProcessWindowOpen(true)}/>
-    {UserWindowOpen && <UserWindow closeWindow={() => setUserWindowOpen(false)} />}
-    {PostProcessWindowOpen && <PostProcessWindow closeWindow={() => setPostProcessWindowOpen(false)} />}
+    {userWindowOpen && <UserWindow closeWindow={() => setUserWindowOpen(false)} />}
+    {postProcessWindowOpen && (
+    <PostProcessWindow
+        closeWindow={() => setPostProcessWindowOpen(false)}
+        launchDreams={() => {
+          for(let i=0;i<6;i++) {
+            setTimeout(()=>setDreamWindowOpen(i), i*500);
+          }
+        }}
+    />)}
+    {dreamWindowOpen >= 0 && <DreamWindow number={0} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 1 && <DreamWindow number={1} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 2 && <DreamWindow number={2} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 3 && <DreamWindow number={3} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 4 && <DreamWindow number={4} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 5 && <DreamWindow number={5} closeWindow={() => setDreamWindowOpen(false)} />}
   </ThemeProvider>
   </div>
 )};

@@ -63,7 +63,7 @@ align-items: center;.window-header {
 }
 `;
 
-export default ({closeWindow}) => {
+export default ({closeWindow, launchDreams}) => {
   const code1 = `void readLargerTextFile(String aFileName) throws IOException {
     Path path = Paths.get(aFileName);
     try (Scanner scanner =  new Scanner(path, ENCODING.name())){
@@ -79,7 +79,7 @@ private static void log(Object aMsg){
 }`;
   const code2 = `	public static void main(String [] args) throws IOException
 	{
-		modeleInit = FileReader.readLargerTextFile("input.in");
+		modeleInit = Dreamer.computeHappiness(dream);
 		//TODO
 		int i=0;
 		Modele modeleBoucle = (Modele) modeleInit.clone();
@@ -138,6 +138,7 @@ private static void log(Object aMsg){
               rows={4}
               defaultValue={code1}
               fullWidth
+              spellCheck='false'
             />
             <Button onClick={() => {}} style={{ marginLeft: 4 }}>
               Lancer
@@ -150,8 +151,9 @@ private static void log(Object aMsg){
               rows={4}
               defaultValue={code2}
               fullWidth
+              spellCheck='false'
             />
-            <Button onClick={() => {}} style={{ marginLeft: 4 }}>
+            <Button onClick={launchDreams} style={{ marginLeft: 4 }}>
               Lancer
             </Button>
           </div>
@@ -162,6 +164,7 @@ private static void log(Object aMsg){
               rows={4}
               defaultValue={code3}
               fullWidth
+              spellCheck='false'
             />
             <Button onClick={() => {}} style={{ marginLeft: 4 }}>
               Lancer
