@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Bar, AppBar, Toolbar, Button, List, ListItem } from 'react95'; 
+import { Bar, AppBar, Toolbar, Button, List, ListItem } from 'react95';
 
 export default ({ openUserWindow, openPostProcessWindow }) => {
     const [open, setOpen] = useState(false);
+    const [isAdmin, setAdmin] = useState(true);
 
     return (
     <AppBar>
@@ -36,8 +37,22 @@ export default ({ openUserWindow, openPostProcessWindow }) => {
               open={open}
               onClick={() => setOpen(false)}
             >
-              <ListItem onClick={() => openUserWindow()}  size='sm'>Se connecter en administrateur</ListItem>
-              <ListItem onClick={() => openPostProcessWindow()}  size='sm'>Post-traitement</ListItem>
+
+              {isAdmin && <ListItem onClick={() => openPostProcessWindow()}  size='sm'>Post-traitement</ListItem>}
+              {!isAdmin && <ListItem>Pilote Test</ListItem>}
+              {<ListItem>Outils de débogage</ListItem>}
+              {<ListItem>Informations sur la page</ListItem>}
+              {<ListItem>Rechercher</ListItem>}
+              {isAdmin && <ListItem>Synchronisation</ListItem>}
+              {isAdmin && <ListItem>Sécurité</ListItem>}
+              {isAdmin && <ListItem>Autorisations</ListItem>}
+              {!isAdmin && <ListItem
+               onClick={() => {
+                openUserWindow();
+                setAdmin(true);
+              }}
+              size='sm'
+              >Se connecter en administrateur</ListItem>}
             </List>
           )}
         </div>

@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { Cutout, Window, WindowContent, WindowHeader, Button, TextField } from 'react95'; 
+import { Cutout, Window, WindowContent, WindowHeader, Button, TextField } from 'react95';
 import styled from 'styled-components';
 
-import hairspray from './hairspray.jpg';
-import moulinrouge from './moulinrouge.jpg';
-import greatestshowman from './greatestshowman.jpeg';
-import lalaland from './lalaland.jpg';
-import kinkyboot from './kinkyboot.jpg';
-import interstella from './interstella.jpg';
+import hairspray from './hairspray_like.png';
+import moulinrouge from './moulinrouge_like.png';
+import greatestshowman from './greatestshowman_like.png';
+import lalaland from './lalaland_like.png';
+import kinkyboot from './kinkyboots_like.png';
+import interstella from './interstella_like.png';
+import chicago from './chicago_like.png';
+import cats from './cats_like.png';
+import vampires from './vampires_like.png';
 
 const Wrapper = styled.div`
 position: absolute;
@@ -60,18 +63,22 @@ position: absolute;
 `;
 
 const musicalSrc = [
-    hairspray,
-    moulinrouge,
-    greatestshowman,
-    lalaland,
-    kinkyboot,
     interstella,
+    moulinrouge,
+    cats,
+    greatestshowman,
+    chicago,
+    vampires,
+    kinkyboot,
+    lalaland,
+    hairspray,
 ]
 export default ({closeWindow, number}) => {
+  console.log(number)
     return (
         <Wrapper style={{
-            top: `${number}0%`,
-            left: `${number}0%`
+            top: `${(number%5)*10 + 15}%`,
+            left: `${(number%5)*10 + 5}%`
         }}>
         <Window className='window'>
         <WindowHeader className='window-header'>
@@ -94,7 +101,7 @@ export default ({closeWindow, number}) => {
         closeWindow();
       }}>OK</Button>
       </div>
-    </Window>   
+    </Window>
     </Wrapper>
      );
 }

@@ -13,6 +13,8 @@ import UserWindow from './UserWindow';
 import DreamWindow from './DreamWindow';
 import PostProcessWindow from './PostProcessWindow';
 
+import background from './fond_mooniest.png';
+
 const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: 'ms_sans_serif';
@@ -41,13 +43,18 @@ const App = () => {
   <div>
     <GlobalStyles />
     <ThemeProvider theme={original}>
+    <img
+        style={{ width: '100vw', height: '100vh', display: 'block', position: 'absolute' }}
+        src={background}
+        alt='background'
+    />
     <AppBar openUserWindow={() => setUserWindowOpen(true)} openPostProcessWindow={() => setPostProcessWindowOpen(true)}/>
     {userWindowOpen && <UserWindow closeWindow={() => setUserWindowOpen(false)} />}
     {postProcessWindowOpen && (
     <PostProcessWindow
         closeWindow={() => setPostProcessWindowOpen(false)}
         launchDreams={() => {
-          for(let i=0;i<6;i++) {
+          for(let i=0;i<9;i++) {
             setTimeout(()=>setDreamWindowOpen(i), i*500);
           }
         }}
@@ -58,6 +65,9 @@ const App = () => {
     {dreamWindowOpen >= 3 && <DreamWindow number={3} closeWindow={() => setDreamWindowOpen(false)} />}
     {dreamWindowOpen >= 4 && <DreamWindow number={4} closeWindow={() => setDreamWindowOpen(false)} />}
     {dreamWindowOpen >= 5 && <DreamWindow number={5} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 6 && <DreamWindow number={6} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 7 && <DreamWindow number={7} closeWindow={() => setDreamWindowOpen(false)} />}
+    {dreamWindowOpen >= 8 && <DreamWindow number={8} closeWindow={() => setDreamWindowOpen(false)} />}
   </ThemeProvider>
   </div>
 )};
